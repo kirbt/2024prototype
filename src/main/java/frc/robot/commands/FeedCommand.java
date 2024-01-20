@@ -17,6 +17,11 @@ public class FeedCommand extends Command {
     }
     
     @Override
+    public void execute() {
+        coolSubsystem.feedForward();
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }
