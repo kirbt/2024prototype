@@ -58,10 +58,10 @@ public class CoolSubsystem extends SubsystemBase {
 
     //PID
 
-    private final SparkPIDController topFeedMotorPidController;
-    private final SparkPIDController topShooterMotorPidController;
-    private final SparkPIDController bottomFeedMotorPidController;
-    private final SparkPIDController bottomShooterMotorPidController;
+    private SparkPIDController topFeedMotorPidController;
+    private SparkPIDController topShooterMotorPidController;
+    private SparkPIDController bottomFeedMotorPidController;
+    private SparkPIDController bottomShooterMotorPidController;
 
 
     // logging
