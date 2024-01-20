@@ -14,6 +14,7 @@ public class FeedCommand extends Command {
     @Override
     public void initialize() {
         coolSubsystem.feedForward();
+        System.out.println("feed");
     }
     
     @Override

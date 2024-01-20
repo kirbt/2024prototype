@@ -23,8 +23,8 @@ public class CoolSubsystem extends SubsystemBase {
     // CONSTANTS
 
     // -1 - 1 value
-    private static final double FEEDING_SPEED = 1;
-    private static final double SHOOTING_SPEED = 1;
+    private static final double FEEDING_SPEED = 0.1;
+    private static final double SHOOTING_SPEED = 0.1;
 
     // MOTORS
 
@@ -38,6 +38,7 @@ public class CoolSubsystem extends SubsystemBase {
     public double feedingSpeed;
     public double shootingSpeed;
 
+
     GenericEntry feedingSpeedEntry =
 			Shuffleboard.getTab("Cool Subsystem")
 					.add("Feeding Speed", FEEDING_SPEED)
@@ -48,7 +49,7 @@ public class CoolSubsystem extends SubsystemBase {
 
     GenericEntry shootingSpeedEntry =
 			Shuffleboard.getTab("Cool Subsystem")
-					.add("Feeding Speed", SHOOTING_SPEED)
+					.add("Shooting Speed", SHOOTING_SPEED)
 					.withSize(2, 1)
 					.withWidget(BuiltInWidgets.kNumberSlider)
 					.withProperties(Map.of("Min", -1, "Max", 1))
@@ -71,7 +72,7 @@ public class CoolSubsystem extends SubsystemBase {
         bottomShooterMotor.follow(topShooterMotor);
 
         bottomFeedMotor.setInverted(true);
-        bottomShooterMotor.setInverted(true);
+        topShooterMotor.setInverted(false);
 
         topFeedMotor.setIdleMode(IdleMode.kCoast);
         bottomFeedMotor.setIdleMode(IdleMode.kCoast);
@@ -81,10 +82,13 @@ public class CoolSubsystem extends SubsystemBase {
 
     public void feedForward() {
         topFeedMotor.set(feedingSpeedEntry.getDouble(FEEDING_SPEED));
+        feedingSpeed = topFeedMotor.get();
     }
 
     public void shootForward() {
+        System.out.println("gulp");
         topShooterMotor.set(shootingSpeedEntry.getDouble(SHOOTING_SPEED));
+        feedingSpeed = topShooterMotor.get();
     }
 
     public void stopFeedMotors() {

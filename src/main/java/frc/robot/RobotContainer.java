@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.FeedShootCommand;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.StopCommand;
 import frc.robot.subsystems.CoolSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,7 +44,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    System.out.println("bimnd");
 
+    coolSubsystem.setDefaultCommand(new ShooterCommand(coolSubsystem));
     m_driverController.leftTrigger().onTrue(new FeedShootCommand(coolSubsystem));
     m_driverController.rightTrigger().onTrue(new StopCommand(coolSubsystem));
 
