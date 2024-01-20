@@ -1,7 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkFlex;
+
+import java.util.Map;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -27,6 +33,26 @@ public class CoolSubsystem extends SubsystemBase {
     public CANSparkFlex topShooterMotor;
     public CANSparkFlex bottomShooterMotor;
 
+    // changable speeds
+
+    public double feedingSpeed;
+    public double shootingSpeed;
+
+    GenericEntry feedingSpeedEntry =
+			Shuffleboard.getTab("Cool Subsystem")
+					.add("Feeding Speed", FEEDING_SPEED)
+					.withSize(2, 1)
+					.withWidget(BuiltInWidgets.kNumberSlider)
+					.withProperties(Map.of("Min", -1, "Max", 1))
+					.getEntry();
+
+    GenericEntry shootingSpeedEntry =
+			Shuffleboard.getTab("Cool Subsystem")
+					.add("Feeding Speed", SHOOTING_SPEED)
+					.withSize(2, 1)
+					.withWidget(BuiltInWidgets.kNumberSlider)
+					.withProperties(Map.of("Min", -1, "Max", 1))
+					.getEntry();
     // CONSTRUCTOR
 
     public CoolSubsystem () {
@@ -54,11 +80,11 @@ public class CoolSubsystem extends SubsystemBase {
     }
 
     public void feedForward() {
-        topFeedMotor.set(FEEDING_SPEED);
+        topFeedMotor.set(feedingSpeedEntry.getDouble(FEEDING_SPEED));
     }
 
     public void shootForward() {
-        topShooterMotor.set(SHOOTING_SPEED);
+        topShooterMotor.set(shootingSpeedEntry.getDouble(SHOOTING_SPEED));
     }
 
     public void stopFeedMotors() {
