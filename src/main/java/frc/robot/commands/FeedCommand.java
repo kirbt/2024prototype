@@ -14,13 +14,13 @@ public class FeedCommand extends Command {
     @Override
     public void initialize() {
         // coolSubsystem.feedForward();
-        //coolSubsystem.setFeederVelocityGoal();
+        coolSubsystem.setFeederVelocityGoal();
     }
     
     @Override
     public void execute() {
-        coolSubsystem.feedForward();
-        // coolSubsystem.setFeederVelocityGoal();
+        // coolSubsystem.feedForward();
+        coolSubsystem.setFeederVelocityGoal();
         
     }
 

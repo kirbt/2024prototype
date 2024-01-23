@@ -34,11 +34,11 @@ public class CoolSubsystem extends SubsystemBase {
 
     //pid
 
-    private static final double FEEDER_P = 0;
+    private static final double FEEDER_P = 0.1;
     private static final double FEEDER_I = 0;
     private static final double FEEDER_D = 0;
 
-    private static final double SHOOTER_P = 0;
+    private static final double SHOOTER_P = 0.1;
     private static final double SHOOTER_I = 0;
     private static final double SHOOTER_D = 0;
 
@@ -58,10 +58,10 @@ public class CoolSubsystem extends SubsystemBase {
 
     //PID
 
-    private final SparkPIDController topFeedMotorPidController;
-    private final SparkPIDController topShooterMotorPidController;
-    private final SparkPIDController bottomFeedMotorPidController;
-    private final SparkPIDController bottomShooterMotorPidController;
+    private SparkPIDController topFeedMotorPidController;
+    private SparkPIDController topShooterMotorPidController;
+    private SparkPIDController bottomFeedMotorPidController;
+    private SparkPIDController bottomShooterMotorPidController;
 
 
     // logging
