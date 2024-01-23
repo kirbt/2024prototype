@@ -29,8 +29,10 @@ public class CoolSubsystem extends SubsystemBase {
     // CONSTANTS
 
     // -1 - 1 value
-    private static final double FEEDING_SPEED = 0.20;
-    private static final double SHOOTING_SPEED = 0.5;
+
+    // defaults 0.20 and 0.5
+    private static final double FEEDING_SPEED = 0.1;
+    private static final double SHOOTING_SPEED = 0.2;
 
     //pid
 

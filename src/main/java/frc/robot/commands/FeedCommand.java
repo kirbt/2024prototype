@@ -19,8 +19,8 @@ public class FeedCommand extends Command {
     
     @Override
     public void execute() {
-        // coolSubsystem.feedForward();
-        coolSubsystem.setFeederVelocityGoal();
+        coolSubsystem.feedForward();
+        // coolSubsystem.setFeederVelocityGoal();
         
     }
 
