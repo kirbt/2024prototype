@@ -87,13 +87,13 @@ public class CoolSubsystem extends SubsystemBase {
 					.withProperties(Map.of("Min", -1, "Max", 1))
 					.getEntry();
                     
-    GenericEntry shooterPEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterP", SHOOTER_P).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
-    GenericEntry shooterIEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterI", SHOOTER_I).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
-    GenericEntry shooterDEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterD", SHOOTER_D).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+    GenericEntry shooterPEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterP", SHOOTER_P).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0, "Max", 1)).getEntry();
+    GenericEntry shooterIEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterI", SHOOTER_I).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0, "Max", 1)).getEntry();
+    GenericEntry shooterDEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterD", SHOOTER_D).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0, "Max", 1)).getEntry();
 
-    GenericEntry feederPEntry = Shuffleboard.getTab("Cool Subsystem").add("feederP", FEEDER_P).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
-    GenericEntry feederIEntry = Shuffleboard.getTab("Cool Subsystem").add("feederI", FEEDER_I).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
-    GenericEntry feederDEntry = Shuffleboard.getTab("Cool Subsystem").add("feederD", FEEDER_D).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+    GenericEntry feederPEntry = Shuffleboard.getTab("Cool Subsystem").add("feederP", FEEDER_P).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0, "Max", 1)).getEntry();
+    GenericEntry feederIEntry = Shuffleboard.getTab("Cool Subsystem").add("feederI", FEEDER_I).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0, "Max", 1)).getEntry();
+    GenericEntry feederDEntry = Shuffleboard.getTab("Cool Subsystem").add("feederD", FEEDER_D).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0, "Max", 1)).getEntry();
     // CONSTRUCTOR
 
     public CoolSubsystem () {
