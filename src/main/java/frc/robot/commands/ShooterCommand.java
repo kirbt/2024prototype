@@ -13,13 +13,13 @@ public class ShooterCommand extends Command {
 
     @Override
     public void initialize() {
-        coolSubsystem.setShooterVelocityGoal();
+        coolSubsystem.shootForward();
     }
 
     @Override
     public void execute() {
         // coolSubsystem.shootForward();
-        coolSubsystem.setShooterVelocityGoal();
+        coolSubsystem.shootForward();
     }
     
     @Override

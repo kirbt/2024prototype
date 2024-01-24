@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -31,8 +32,8 @@ public class CoolSubsystem extends SubsystemBase {
     // -1 - 1 value
 
     // defaults 0.20 and 0.5
-    private static final double FEEDING_SPEED = 0.1;
-    private static final double SHOOTING_SPEED = 0.2;
+    private static final double FEEDING_SPEED = 0.15;
+    private static final double SHOOTING_SPEED = 0.6;
 
     //pid
 
@@ -85,6 +86,14 @@ public class CoolSubsystem extends SubsystemBase {
 					.withWidget(BuiltInWidgets.kNumberSlider)
 					.withProperties(Map.of("Min", -1, "Max", 1))
 					.getEntry();
+                    
+    GenericEntry shooterPEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterP", SHOOTER_P).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+    GenericEntry shooterIEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterI", SHOOTER_I).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+    GenericEntry shooterDEntry = Shuffleboard.getTab("Cool Subsystem").add("shooterD", SHOOTER_D).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+
+    GenericEntry feederPEntry = Shuffleboard.getTab("Cool Subsystem").add("feederP", FEEDER_P).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+    GenericEntry feederIEntry = Shuffleboard.getTab("Cool Subsystem").add("feederI", FEEDER_I).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
+    GenericEntry feederDEntry = Shuffleboard.getTab("Cool Subsystem").add("feederD", FEEDER_D).withSize(2, 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", -1, "Max", 1)).getEntry();
     // CONSTRUCTOR
 
     public CoolSubsystem () {
@@ -103,10 +112,10 @@ public class CoolSubsystem extends SubsystemBase {
         networkTable = NetworkTableInstance.getDefault().getTable("coolsubsystem");
 	    ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Cool Subsystem");
 
-        shuffleboardTab.addDouble("Top Feeding Motor", this::getTopFeedingSpeed).withPosition(5, 0).withSize(1, 1);
-        shuffleboardTab.addDouble("Bottom Feeding Motor", this::getBottomFeedingSpeed).withPosition(6, 0).withSize(1, 1);
-        shuffleboardTab.addDouble("Top Shooting Motor", this::getTopShootingSpeed).withPosition(5, 1).withSize(1, 1);
-        shuffleboardTab.addDouble("Bottom Shooting Motor", this::getBottomShootingSpeed).withPosition(6, 1).withSize(1, 1);
+        shuffleboardTab.addDouble("Top Feeding Motor", topFeedMotor::get).withPosition(5, 0).withSize(1, 1);
+        shuffleboardTab.addDouble("Bottom Feeding Motor", bottomFeedMotor::get).withPosition(6, 0).withSize(1, 1);
+        shuffleboardTab.addDouble("Top Shooting Motor", topShooterMotor::get).withPosition(5, 1).withSize(1, 1);
+        shuffleboardTab.addDouble("Bottom Shooting Motor", bottomShooterMotor::get).withPosition(6, 1).withSize(1, 1);
 
         configMotors();
     }
@@ -133,44 +142,48 @@ public class CoolSubsystem extends SubsystemBase {
     }
 
     public void setPID() {
-        topFeedMotorPidController.setP(FEEDER_P);
-        topFeedMotorPidController.setP(FEEDER_I);
-        topFeedMotorPidController.setP(FEEDER_D);
+        topFeedMotorPidController.setP(feederPEntry.getDouble(FEEDER_P));
+        topFeedMotorPidController.setP(feederIEntry.getDouble(FEEDER_I));
+        topFeedMotorPidController.setP(feederDEntry.getDouble(FEEDER_D));
         //top and bottom feed
-        bottomFeedMotorPidController.setP(SHOOTER_P);
-        bottomFeedMotorPidController.setP(SHOOTER_I);
-        bottomFeedMotorPidController.setP(SHOOTER_D);
+        bottomFeedMotorPidController.setP(feederPEntry.getDouble(FEEDER_P));
+        bottomFeedMotorPidController.setP(feederIEntry.getDouble(FEEDER_I));
+        bottomFeedMotorPidController.setP(feederDEntry.getDouble(FEEDER_D));
 
         //shooter
-        topShooterMotorPidController.setP(FEEDER_P);
-        topShooterMotorPidController.setP(FEEDER_I);
-        topShooterMotorPidController.setP(FEEDER_D);
+        topShooterMotorPidController.setP(shooterPEntry.getDouble(SHOOTER_P));
+        topShooterMotorPidController.setP(shooterIEntry.getDouble(SHOOTER_D));
+        topShooterMotorPidController.setP(shooterDEntry.getDouble(SHOOTER_D));
 
-        bottomShooterMotorPidController.setP(SHOOTER_P);
-        bottomShooterMotorPidController.setP(SHOOTER_I);
-        bottomShooterMotorPidController.setP(SHOOTER_D);
+        bottomShooterMotorPidController.setP(shooterPEntry.getDouble(SHOOTER_P));
+        bottomShooterMotorPidController.setP(shooterIEntry.getDouble(SHOOTER_I));
+        bottomShooterMotorPidController.setP(shooterDEntry.getDouble(SHOOTER_D));
     
     }
 
     public void feedForward() {
-        topFeedMotor.set(FEEDING_SPEED);
-        bottomFeedMotor.set(-FEEDING_SPEED);
+        topFeedMotor.set(feedingSpeedEntry.getDouble(FEEDING_SPEED));
+        bottomFeedMotor.set(-feedingSpeedEntry.getDouble(FEEDING_SPEED));
+        //setFeederVelocityGoal(feedingSpeedEntry.getDouble(FEEDING_SPEED));
     }
 
     public void shootForward() {
         System.out.println("gulp");
-        topShooterMotor.set(SHOOTING_SPEED);
-        bottomShooterMotor.set(-SHOOTING_SPEED);
+        topShooterMotor.set(shootingSpeedEntry.getDouble(SHOOTING_SPEED));
+        bottomShooterMotor.set(-shootingSpeedEntry.getDouble(SHOOTING_SPEED));
+        //setShooterVelocityGoal(shootingSpeedEntry.getDouble(SHOOTING_SPEED));
     }
 
     public void stopFeedMotors() {
         topFeedMotor.set(0);
-        bottomShooterMotor.set(0);
+        bottomFeedMotor.set(0);
+        //setFeederVelocityGoal(0);
     }
 
     public void stopShooterMotors() {
         topShooterMotor.set(0);
         bottomShooterMotor.set(0);
+        //setShooterVelocityGoal(0);
     }
 
     // logging
@@ -194,15 +207,17 @@ public class CoolSubsystem extends SubsystemBase {
 
     // PID methods
 
-    public void setShooterVelocityGoal() {
-        topShooterMotorPidController.setReference(SHOOTING_SPEED, ControlType.kVelocity);
-        bottomShooterMotorPidController.setReference(SHOOTING_SPEED, ControlType.kVelocity);
+    public void setShooterVelocityGoal(double speed) {
+        topShooterMotorPidController.setReference(speed, ControlType.kVelocity);
+        bottomShooterMotorPidController.setReference(speed, ControlType.kVelocity);
+        System.out.println("shooter velocity was set (wow 2x)");
     }
 
-    public void setFeederVelocityGoal() {
-        topFeedMotorPidController.setReference(FEEDING_SPEED, ControlType.kVelocity);
-        bottomFeedMotorPidController.setReference(FEEDING_SPEED, ControlType.kVelocity);
+    public void setFeederVelocityGoal(double speed) {
+        topFeedMotorPidController.setReference(speed, ControlType.kVelocity);
+        bottomFeedMotorPidController.setReference(speed, ControlType.kVelocity);
         System.out.println(topFeedMotorPidController.getOutputMax(0));
+        System.out.println("feeder velocity was set (wow)");
     }
 
 
@@ -212,6 +227,8 @@ public class CoolSubsystem extends SubsystemBase {
         bottomShootingSpeed = bottomFeedMotor.get();
         topShootingSpeed = topShooterMotor.get();
         bottomShootingSpeed = bottomShooterMotor.get();
+
+        setPID();
     }
     
 }
